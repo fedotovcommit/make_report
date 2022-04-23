@@ -118,7 +118,3 @@ def make_report(log_file_name, report_template_file_name, report_output_file_nam
         wb_out.save(report_output_file_name)
 
 # make_report('logs.xlsx', 'report_template.xlsx', 'report.xlsx')
-
-# Заполнить раздел “Предпочтения”, вычислив самые популярные и самые не
-# востребованные товары среди мужчин и женщин. Самый популярный товар -
-# товар с наибольшим количеством продаж. Самый невостребованный - с наименьшим.
