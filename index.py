@@ -18,11 +18,9 @@ def make_report(log_file_name, report_template_file_name, report_output_file_nam
 
         # восстребованные товары у мужчин
         products_man = []
-
         # восстребованные товары у женщин
         products_woman = []
-        # невосстребованные
-        not_top_products_woman = []
+
         for j in range(2, len(sheet['D'])+1):
                 browser = sheet.cell(row=j, column=4).value
                 browsers_list.append(browser)
@@ -43,9 +41,6 @@ def make_report(log_file_name, report_template_file_name, report_output_file_nam
         product_man_counter = collections.Counter(products_man).most_common()
         product_woman_counter = collections.Counter(products_woman).most_common()
 
-        print(product_man_counter[0])
-        print(product_man_counter[-1])
-        print(1)
         browsers_dict = {}
 
         months_dict = {'01': 0, '02': 0, '03': 0, '04': 0, '05': 0, '06': 0, '07': 0, '08': 0, '09': 0, '10': 0, '11': 0, '12': 0}
@@ -66,6 +61,7 @@ def make_report(log_file_name, report_template_file_name, report_output_file_nam
 
                 products_temp = sheet.cell(row=j, column=8).value
                 products_temp_list = products_temp.split(',')
+
                 for product in products_temp_list:
                         for k, v in products_dict.items():
                                 if k == product.strip():
@@ -74,16 +70,12 @@ def make_report(log_file_name, report_template_file_name, report_output_file_nam
                                                         products_dict[k][k1] += 1
                                                         sum_of_months_products[k1] += 1
 
-
                 for k, v in browsers_dict.items():
                         if k == browser:
                                 for k1, v1 in v.items():
                                         if k1 == str(month):
                                                 browsers_dict[k][k1] += 1
                                                 sum_of_months_browsers[k1] += 1
-
-        print(2)
-        print(browsers_dict)
 
 
         # записываем браузеры в файл
@@ -94,7 +86,7 @@ def make_report(log_file_name, report_template_file_name, report_output_file_nam
                 for k1, v1 in v.items():
                         sheet_out.cell(row=i, column=j).value = v1
                         j += 1
-                i +=1
+                i += 1
 
         j = 2
         for v in sum_of_months_browsers.values():
@@ -110,13 +102,12 @@ def make_report(log_file_name, report_template_file_name, report_output_file_nam
                 for k1, v1 in v.items():
                         sheet_out.cell(row=i, column=j).value = v1
                         j += 1
-                i +=1
+                i += 1
 
         j = 2
         for v in sum_of_months_products.values():
                 sheet_out.cell(row=26, column=j).value = v
                 j += 1
-
 
 
         sheet_out.cell(row=31, column=2).value = product_man_counter[0][0]
@@ -126,7 +117,8 @@ def make_report(log_file_name, report_template_file_name, report_output_file_nam
 
         wb_out.save(report_output_file_name)
 
-make_report('logs.xlsx', 'report_template.xlsx', 'report.xlsx')
+# make_report('logs.xlsx', 'report_template.xlsx', 'report.xlsx')
+
 # Заполнить раздел “Предпочтения”, вычислив самые популярные и самые не
 # востребованные товары среди мужчин и женщин. Самый популярный товар -
 # товар с наибольшим количеством продаж. Самый невостребованный - с наименьшим.
